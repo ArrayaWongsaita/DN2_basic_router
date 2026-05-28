@@ -5,6 +5,7 @@ export default function NonNumber() {
   console.log("param", param);
   return (
     <div>
+      <img src={`https://picsum.photos/id/${param.myNum}/500/300`} alt="" />
       {param.name} Number : {param.myNum}
     </div>
   );
