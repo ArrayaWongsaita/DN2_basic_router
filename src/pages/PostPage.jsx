@@ -1,22 +1,29 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
 
 export default function PostPage() {
-  const [post, setPost] = useState(null);
   const param = useParams();
-  console.log("param", param);
-  useEffect(() => {
-    const loadPost = async () => {
-      const res = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${param.postId}`,
-      );
-      console.log("res", res);
-      setPost(res.data);
-    };
-    loadPost();
-  }, [param.postId]);
+
+  // load by react query
+  const query = useQuery({
+    queryKey: ["post", param.postId],
+    queryFn: () =>
+      axios.get(`https://jsonplaceholder.typicode.com/posts/${param.postId}`),
+  });
+
+  if (query.isLoading) {
+    return <div>Loading ...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Load Error: {query.error.message}</div>;
+  }
+
+  const { data: post } = query.data;
+
   return (
     <div>
       {post && (

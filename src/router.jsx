@@ -5,6 +5,7 @@ import NonNumber from "./pages/NonNumber";
 import { photoRoute } from "./routes/PhotoRoute";
 import PostLayout from "./layouts/PostLayout";
 import PostPage from "./pages/PostPage";
+import NotesPage from "./pages/NotesPage";
 
 export const router = createBrowserRouter([
   { index: true, Component: HomePage },
@@ -17,4 +18,5 @@ export const router = createBrowserRouter([
     element: <PostLayout />,
     children: [{ index: true, element: <PostPage /> }],
   },
+  { path: "/notes/:userId", element: <NotesPage /> },
 ]);
